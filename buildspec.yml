@@ -4,13 +4,17 @@ phases:
   install:
     runtime-versions:
       java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
+
+  pre_build:
     commands:
-      - echo Installing dependencies...
-      - mvn install -DskipTests  # Optional: Skips tests during the build
+      - echo Downloading emailservice-0.0.1.jar from S3...
+      - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar ./  # Download JAR to the root directory
+
   build:
     commands:
       - echo Building the project...
       - mvn clean install  # Run 'mvn clean install' to build the project
+
   post_build:
     commands:
       - echo Build complete!
