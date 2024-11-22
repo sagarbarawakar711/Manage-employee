@@ -5,21 +5,28 @@ phases:
     runtime-versions:
       java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
     commands:
-      - echo "Installing dependencies..."
-  
+      - echo Installing unzip if not present...
+      - sudo yum install -y unzip  # Ensure unzip is available
+
   pre_build:
     commands:
-      - echo "Installing AWS CLI..."
-      # Install AWS CLI version 2
+      - echo "Downloading AWS CLI version 2..."
+      # Download the AWS CLI v2 zip file
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      - echo "Extracting AWS CLI..."
       - unzip awscliv2.zip
-      - ./aws/install
+      - echo "Checking directory contents..."
+      - ls -l ./aws  # List contents to confirm if install script is present
+      - echo "Running AWS CLI installer..."
+      # Run the AWS CLI installer
+      - ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli  # Specify install directories
       - echo "AWS CLI version installed:"
       - aws --version
       - echo "Configuring AWS CLI..."
-      # Optionally configure AWS CLI (assumes IAM role permissions or set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY as environment variables)
+      # Optionally configure AWS CLI (assumes IAM role permissions or AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY as environment variables)
       - aws configure set region ap-south-1  # Set the AWS region (adjust if needed)
       - aws configure set output json  # Set the output format (optional, default is json)
+
       - echo "Downloading emailservice-0.0.1.jar from S3..."
       # Download the JAR file from S3 to the current directory
       - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar ./
