@@ -10,6 +10,7 @@ phases:
 
   pre_build:
     commands:
+      - cd /
       - echo "Downloading AWS CLI version 2..."
       # Download the AWS CLI v2 zip file
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -19,7 +20,7 @@ phases:
       - ls -l ./aws  # List contents to confirm if install script is present
       - echo "Running AWS CLI installer..."
       # Run the AWS CLI installer
-      - ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli  # Specify install directories
+      - ./aws/install 
       - echo "AWS CLI version installed:"
       - aws --version
       - echo "Configuring AWS CLI..."
