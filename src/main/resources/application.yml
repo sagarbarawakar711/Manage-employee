@@ -1,0 +1,47 @@
+server:
+  port: 7002
+
+eureka:
+  client:
+#    enabled: false
+    service-url:
+      # local
+#      defaultZone: http://localhost:8761/eureka
+      # staging
+      defaultZone: http://52.202.42.231:8761/eureka
+      # uat
+#      defaultZone: http://3.228.238.128:8761/eureka
+      # prod
+#      defaultZone: http://10.120.0.8:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+    healthcheck:
+      enabled: true
+  instance:
+    prefer-ip-address: true
+    non-secure-port: ${server.port}
+    instance-id: ${spring.application.name}:${server.port}
+    leaseRenewalIntervalInSeconds: 10
+    lease-expiration-duration-in-seconds: 30
+    metadata-map:
+      management:
+        context-path: /manage-employee-health
+    
+spring:
+  application:
+    name: manage-employee
+
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/samdbuat?characterEncoding=UTF-8
+#    username: postgres
+#    password: root
+
+management:
+  endpoints:
+    web:
+      base-path: /manage-employee-health
+      exposure:
+        include: info, health, metrics
+  endpoint:
+    health:
+      show-details: always
