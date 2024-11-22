@@ -3,28 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11
-
-  pre_build:
-    commands:
-      - echo Installing AWS CLI...
-      # Install AWS CLI version 2
-      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - unzip awscliv2.zip
-      - sudo ./aws/install
-      - echo AWS CLI version installed:
-      - aws --version
-      - echo Configuring AWS CLI...
-      # Optionally configure AWS CLI (assumes IAM role permissions or set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY as environment variables)
-      - aws configure set region version: 0.2
-
-phases:
-  install:
-    runtime-versions:
       java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
-    commands:
-      - echo Installing dependencies...
-      - mvn install -DskipTests  # Optional: Skips tests during the build
 
   pre_build:
     commands:
@@ -38,25 +17,6 @@ phases:
       - echo Configuring AWS CLI...
       # Optionally configure AWS CLI (assumes IAM role permissions or set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY as environment variables)
       - aws configure set region ap-south-1  # Set the AWS region (adjust if needed)
-      - aws configure set output json  # Set the output format (optional, default is json)
-
-      - echo Downloading emailservice-0.0.1.jar from S3...
-      # Download the JAR file from S3 to the current directory
-      - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar ./
-
-  build:
-    commands:
-      - echo Building the project...
-      - mvn clean install  # Run 'mvn clean install' to build the project
-
-  post_build:
-    commands:
-      - echo Build complete!
-
-artifacts:
-  files:
-    - target/*.jar  # Adjust this according to the location of your generated artifacts
-  # Set the AWS region (adjust if needed)
       - aws configure set output json  # Set the output format (optional, default is json)
 
       - echo Downloading emailservice-0.0.1.jar from S3...
