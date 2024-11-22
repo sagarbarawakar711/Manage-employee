@@ -3,10 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
-    commands:
-      - echo Installing dependencies...
-      - mvn install -DskipTests  # Optional: Skips tests during the build
+      java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11
 
   pre_build:
     commands:
