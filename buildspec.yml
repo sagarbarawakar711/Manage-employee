@@ -7,9 +7,6 @@ phases:
     commands:
       - echo Installing unzip if not present...
       - cd /
-      - yum update -y
-      - yum install -y curl unzip
-      - echo "Downloading AWS CLI version 2..."
       # Download the AWS CLI v2 zip file
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
       - echo "Extracting AWS CLI..."
@@ -18,13 +15,11 @@ phases:
       - ls -l ./aws  # List contents to confirm if install script is present
       - echo "Running AWS CLI installer..."
       # Run the AWS CLI installer
-      - ./aws/install 
+      - cd aws
+      - ./install 
       - echo "AWS CLI version installed:"
       - aws --version
       - echo "Configuring AWS CLI..."
-      # Optionally configure AWS CLI (assumes IAM role permissions or AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY as environment variables)
-      - aws configure set region ap-south-1  # Set the AWS region (adjust if needed)
-      - aws configure set output json  # Set the output format (optional, default is json)
 
   pre_build:
     commands:
