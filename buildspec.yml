@@ -4,22 +4,19 @@ phases:
   install:
     runtime-versions:
       java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
-    commands:
-      - echo "Downloading AWS CLI version 2..."
-      - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - unzip awscliv2.zip
-      - aws --version
   pre_build:
     commands:
       - echo "Downloading emailservice-0.0.1.jar from S3..."
       # Download the JAR file from S3 to the current directory
       - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar .
-
   build:
-    commands:
-      - echo "Building the project..."
-      - mvn clean install
-
+    command: mvn install:install-file
+    parameters:
+          file: /home/ec2-user/prodops-llp-llp-backend-manage-employee-0899b0ff7a05/emailservice-0.0.1.jar
+          groupId: sendemail
+          artifactId: emailservice
+          version: 0.0.1
+          packaging: jar
   post_build:
     commands:
       - echo "Build complete!"
