@@ -11,6 +11,8 @@ phases:
   pre_build:
     commands:
       - cd /
+      - yum update -y
+      - yum install -y curl unzip
       - echo "Downloading AWS CLI version 2..."
       # Download the AWS CLI v2 zip file
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
