@@ -6,10 +6,6 @@ phases:
       java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
     commands:
       - echo Installing unzip if not present...
-      - sudo yum install -y unzip  # Ensure unzip is available
-
-  pre_build:
-    commands:
       - cd /
       - yum update -y
       - yum install -y curl unzip
@@ -30,6 +26,8 @@ phases:
       - aws configure set region ap-south-1  # Set the AWS region (adjust if needed)
       - aws configure set output json  # Set the output format (optional, default is json)
 
+  pre_build:
+    commands:
       - echo "Downloading emailservice-0.0.1.jar from S3..."
       # Download the JAR file from S3 to the current directory
       - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar ./
