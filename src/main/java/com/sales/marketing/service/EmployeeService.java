@@ -3,8 +3,10 @@ package com.sales.marketing.service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,6 +15,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.sales.marketing.controller.model.EmployeeDealerGradeDetails;
 import com.sales.marketing.model.DDealerInfo;
+import com.sales.marketing.model.EmailConfigVO;
 import com.sales.marketing.model.EmpBusinessCoverageArea;
 import com.sales.marketing.model.Employee;
 import com.sales.marketing.model.EmployeeAssignedGoal;
@@ -28,6 +32,7 @@ import com.sales.marketing.model.UserLogin;
 import com.sales.marketing.model.UserRoles;
 import com.sales.marketing.model.VDealerGrade;
 import com.sales.marketing.model.VEmployeeSearch;
+import com.sales.marketing.repository.EmailConfigRepository;
 import com.sales.marketing.repository.EmployeeRepository;
 import com.sales.marketing.repository.EmployeeSearchRepository;
 import com.sales.marketing.utils.GenerateEncryptionPassword;
@@ -39,6 +44,12 @@ import com.sam.email.SendEmailNotification;
 public class EmployeeService {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Value("${newuserreg.email.config.id}")
+	private String newUserRegEmailConfig;
+	
+	@Autowired
+	EmailConfigRepository<EmailConfigVO> emailConfigVO;
 
 	@Autowired
 	EmployeeRepository<Employee> employeeRepository;
@@ -179,6 +190,23 @@ public class EmployeeService {
 			// userlogin.setInactiveD(new Timestamp(new Date().getTime()));
 			result = userLoginService.addUserLogin(userlogin);
 			if (result) {
+				
+				// Configure from email credentails
+				EmailConfigVO emailConfigDetail = getEmailConfigDetails(newUserRegEmailConfig);
+				Map<String, String> emailConfigMap = new HashMap<>();
+				if (emailConfigDetail != null) {
+					emailConfigMap.put("emailUser", emailConfigDetail.getEmailUser());
+					emailConfigMap.put("password", emailConfigDetail.getPassword());
+					emailConfigMap.put("protocol", emailConfigDetail.getProtocol());
+					emailConfigMap.put("smtpHost", emailConfigDetail.getSmtpHost());
+					emailConfigMap.put("smtpPort", emailConfigDetail.getSmtpPort());
+					emailConfigMap.put("smtpAuth", emailConfigDetail.getSmtpAuth());
+					emailConfigMap.put("starttlsEnable", emailConfigDetail.getStarttlsEnable());
+					emailConfigMap.put("active", emailConfigDetail.getActive());
+					emailConfigMap.put("emailServer", emailConfigDetail.getEmailServer());
+					emailConfigMap.put("description", emailConfigDetail.getDescription());
+				}
+				
 				String toEmailIds[] = new String[1];
 				toEmailIds[0] = emp.getDigitalContactInfo().getEmail();
 				SendEmailNotification sendEmail = new SendEmailNotification();
@@ -192,7 +220,7 @@ public class EmployeeService {
 				templateName += "<br> LLP Team.";
 				templateName += "<br> Please note this is an auto generated email.";
 				String msg = sendEmail.sendMail(toEmailIds, null, null, "New Employee Added into the System",
-						templateName, null);
+						templateName, null, emailConfigMap, null);
 				logger.info(emp.getFirstName() + ", " + emp.getLastName() + ", " + emp.getEmployeeId() + ", "
 						+ emp.getDigitalContactInfo().getEmail() + " := " + msg);
 				if (StringUtils.isNotEmpty(msg)) {
@@ -420,5 +448,17 @@ public class EmployeeService {
 
 		return results.stream().map(r -> new EmployeeDealerGradeDetails(r.getEmployeeId(), r.getDealerId(),
 				r.getDealerName(), r.getDealerGrade())).collect(Collectors.toList());
+	}
+	
+	public EmailConfigVO getEmailConfigDetails(String configId) {
+		try {
+			String idStr = configId;
+			EmailConfigVO configVO = emailConfigVO.findById(Integer.parseInt(idStr)).get();
+			logger.info("Email details fetch");
+			return configVO;
+		} catch (Exception e) {
+			logger.error("Error in reading Email configurations : " + e);
+			return null;
+		}
 	}
 }

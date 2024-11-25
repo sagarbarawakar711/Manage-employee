@@ -4,12 +4,15 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sales.marketing.bean.PasswordEncoderConfig;
 import com.sales.marketing.config.JwtTokenUtil;
+import com.sales.marketing.model.EmailClientsVO;
+import com.sales.marketing.model.EmailConfigVO;
 import com.sales.marketing.model.UserLogin;
+import com.sales.marketing.repository.EmailConfigRepository;
 import com.sales.marketing.service.UserLoginService;
 import com.sales.marketing.utils.GenerateEncryptionPassword;
 import com.sales.marketing.utils.GeneratePlainPassword;
@@ -36,6 +42,12 @@ import com.sam.email.SendEmailNotification;
 public class UserLoginController {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Value("${updateprofilepwd.email.config.id}")
+	private String updateprofilepwdEmailConfig;
+	
+	@Autowired
+	EmailConfigRepository<EmailConfigVO> emailConfigVO;
 	
 	@Autowired
 	PasswordEncoderConfig passwordEncoder;
@@ -79,6 +91,23 @@ public class UserLoginController {
 					userLogin.setLastUpdatedUserI(search.getEmailId());
 					boolean result= service.updateUserLogin(userLogin);
 					if(result) {
+						
+						// Configure from email credentails
+						EmailConfigVO emailConfigDetail = getEmailConfigDetails(updateprofilepwdEmailConfig);
+						Map<String, String> emailConfigMap = new HashMap<>();
+						if (emailConfigDetail != null) {
+							emailConfigMap.put("emailUser", emailConfigDetail.getEmailUser());
+							emailConfigMap.put("password", emailConfigDetail.getPassword());
+							emailConfigMap.put("protocol", emailConfigDetail.getProtocol());
+							emailConfigMap.put("smtpHost", emailConfigDetail.getSmtpHost());
+							emailConfigMap.put("smtpPort", emailConfigDetail.getSmtpPort());
+							emailConfigMap.put("smtpAuth", emailConfigDetail.getSmtpAuth());
+							emailConfigMap.put("starttlsEnable", emailConfigDetail.getStarttlsEnable());
+							emailConfigMap.put("active", emailConfigDetail.getActive());
+							emailConfigMap.put("emailServer", emailConfigDetail.getEmailServer());
+							emailConfigMap.put("description", emailConfigDetail.getDescription());
+						}
+						
 						//userLogin.setApiStatusMessage("Successfully password updated");
 						logger.info(userLogin.toString());
 						
@@ -93,7 +122,7 @@ public class UserLoginController {
 						templateName+="<br> Thanks";
 						templateName+="<br> LLP Team.";
 								templateName+="<br> Please note this is an auto generated email."; 
-						String msg = sendEmail.sendMail(toEmailIds, null, null, "Password successfully updated ", templateName, null);
+						String msg = sendEmail.sendMail(toEmailIds, null, null, "Password successfully updated ", templateName, null, emailConfigMap, null);
 						logger.info(msg);						
 						return userLogin;
 					}
@@ -178,6 +207,23 @@ public class UserLoginController {
 					if(userLogin.getInactiveD() != null) {
 						return "Account is terminated";
 					}else {
+						
+						// Configure from email credentails
+						EmailConfigVO emailConfigDetail = getEmailConfigDetails(updateprofilepwdEmailConfig);
+						Map<String, String> emailConfigMap = new HashMap<>();
+						if (emailConfigDetail != null) {
+							emailConfigMap.put("emailUser", emailConfigDetail.getEmailUser());
+							emailConfigMap.put("password", emailConfigDetail.getPassword());
+							emailConfigMap.put("protocol", emailConfigDetail.getProtocol());
+							emailConfigMap.put("smtpHost", emailConfigDetail.getSmtpHost());
+							emailConfigMap.put("smtpPort", emailConfigDetail.getSmtpPort());
+							emailConfigMap.put("smtpAuth", emailConfigDetail.getSmtpAuth());
+							emailConfigMap.put("starttlsEnable", emailConfigDetail.getStarttlsEnable());
+							emailConfigMap.put("active", emailConfigDetail.getActive());
+							emailConfigMap.put("emailServer", emailConfigDetail.getEmailServer());
+							emailConfigMap.put("description", emailConfigDetail.getDescription());
+						}
+						
 						String tempkey =userLogin.getPasswordSalt();
 						String existingpassword=userLogin.getPasswordHash();
 						String plainpassword = new GeneratePlainPassword().GetPlainPaswword(tempkey, existingpassword);
@@ -191,7 +237,7 @@ public class UserLoginController {
 						templateName+="<br> Thanks";
 						templateName+="<br> LLP Team.";
 								templateName+="<br> Please note this is an auto generated email."; 
-						String msg = sendEmail.sendMail(toEmailIds, null, null, "Password successfully sent ", templateName, null);
+						String msg = sendEmail.sendMail(toEmailIds, null, null, "Password successfully sent ", templateName, null, emailConfigMap, null);
 						logger.info(msg);
 						return msg;
 					}
@@ -201,5 +247,17 @@ public class UserLoginController {
 		} catch (Exception e) {
 			return e.getMessage();
 		}
-	}	
+	}
+	
+	public EmailConfigVO getEmailConfigDetails(String configId) {
+		try {
+			String idStr = configId;
+			EmailConfigVO configVO = emailConfigVO.findById(Integer.parseInt(idStr)).get();
+			logger.info("Email details fetch");
+			return configVO;
+		} catch (Exception e) {
+			logger.error("Error in reading Email configurations : " + e);
+			return null;
+		}
+	}
 }
