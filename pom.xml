@@ -62,6 +62,11 @@
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
+    			<groupId>com.sam</groupId>
+  			<artifactId>emailservice</artifactId>
+   		        <version>0.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>sendemail</groupId>
 			<artifactId>emailservice</artifactId>
 			<version>0.0.1</version>
@@ -147,6 +152,13 @@
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>com.sam</groupId>
+				<artifactId>emailservice</artifactId>
+				<version>0.0.1</version>
+				<scope>system</scope>
+				<systemPath>/home/ec2-user/Manage-employee/libs/emailservice-0.0.1.jar</systemPath>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
