@@ -16,7 +16,7 @@ phases:
       - echo "Running AWS CLI installer..."
       # Run the AWS CLI installer
       - cd aws
-      - ./install 
+      - bash install 
       - echo "AWS CLI version installed:"
       - aws --version
       - echo "Configuring AWS CLI..."
