@@ -18,7 +18,12 @@ phases:
   build:
     commands:
       - echo "Building the project..."
-      - mvn clean install  # Run 'mvn clean install' to build the project
+      - mvn install:install-file \
+          -Dfile=/home/ec2-user/prodops-llp-llp-backend-manage-employee-0899b0ff7a05/emailservice-0.0.1.jar \
+          -DgroupId=sendemail \
+          -DartifactId=emailservice \
+          -Dversion=0.0.1 \
+          -Dpackaging=jar
 
   post_build:
     commands:
