@@ -5,22 +5,23 @@ phases:
     runtime-versions:
       java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
     commands:
-      - echo Installing unzip if not present...
-      - cd /
-      # Download the AWS CLI v2 zip file
+       - echo "Running yum clean..."
+      - yum clean all  # Clear any cached data
+      - echo "Running yum update..."
+      - yum update -y  # Ensure repositories are up to date
+      - echo "Verifying yum repositories..."
+      - yum repolist  # Check if repositories are available
+      - echo "Installing curl and unzip..."
+      - yum install -y curl unzip  # Try to install the packages
+      - echo "Verifying curl installation..."
+      - curl --version  # Verify curl installation
+      - echo "Verifying unzip installation..."
+      - unzip -v  # Verify unzip installation
+      - echo "Downloading AWS CLI version 2..."
       - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      - echo "Extracting AWS CLI..."
       - unzip awscliv2.zip
-      - echo "Checking directory contents..."
-      - ls -l ./aws  # List contents to confirm if install script is present
-      - echo "Running AWS CLI installer..."
-      # Run the AWS CLI installer
-      - cd aws
-      - bash install 
-      - echo "AWS CLI version installed:"
+      - ./aws/install
       - aws --version
-      - echo "Configuring AWS CLI..."
-
   pre_build:
     commands:
       - echo "Downloading emailservice-0.0.1.jar from S3..."
