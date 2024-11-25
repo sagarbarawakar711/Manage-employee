@@ -8,15 +8,12 @@ phases:
     commands:
       - echo "Downloading emailservice-0.0.1.jar from S3..."
       # Download the JAR file from S3 to the current directory
-      - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar .
+      - mkdir libs 
+      - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar libs
   build:
-    command: mvn install:install-file
-    parameters:
-          file: /home/ec2-user/prodops-llp-llp-backend-manage-employee-0899b0ff7a05/emailservice-0.0.1.jar
-          groupId: sendemail
-          artifactId: emailservice
-          version: 0.0.1
-          packaging: jar
+    command: 
+    - mvn install:install-file -Dfile=/home/ec2-user/Manage-employee/libs/emailservice-0.0.1.jar -DgroupId=com.sam -DartifactId=emailservice -Dversion=0.0.1 -Dpackaging=jar
+    - mvn clean install
   post_build:
     commands:
       - echo "Build complete!"
