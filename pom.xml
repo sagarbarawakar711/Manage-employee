@@ -158,21 +158,21 @@
 				<artifactId>emailservice</artifactId>
 				<version>0.0.1</version>
 				<scope>system</scope>
-				<systemPath>libs/emailservice-0.0.1.jar</systemPath>
+				<systemPath>Manage-employee/libs/emailservice-0.0.1.jar</systemPath>
 			</dependency>
 			<dependency>
 				<groupId>managemodel</groupId>
 				<artifactId>managemodel</artifactId>
 				<version>0.0.1</version>
 				<scope>system</scope>
-				<systemPath>libs/managemodel-0.0.1.jar</systemPath>
+				<systemPath>Manage-employee/libs/managemodel-0.0.1.jar</systemPath>
 			</dependency>
 			<dependency>
 				<groupId>authToken</groupId>
 				<artifactId>authToken</artifactId>
 				<version>0.0.2</version>
 				<scope>system</scope>
-				<systemPath>libs/authToken-2.0.0.jar</systemPath>
+				<systemPath>Manage-employee/libs/authToken-2.0.0.jar</systemPath>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
