@@ -11,6 +11,7 @@ phases:
       - mkdir libs
       - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar libs/
       - ls -la
+      - ls -la libs/
   build:
     command: 
       - mvn install:install-file -Dfile=/home/ec2-user/Manage-employee/libs/emailservice-0.0.1.jar -DgroupId=com.sam -DartifactId=emailservice -Dversion=0.0.1 -Dpackaging=jar
