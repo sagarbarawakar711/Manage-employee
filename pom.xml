@@ -158,21 +158,21 @@
 				<artifactId>emailservice</artifactId>
 				<version>0.0.1</version>
 				<scope>system</scope>
-				<systemPath>/home/ec2-user/Manage-employee/libs/emailservice-0.0.1.jar</systemPath>
+				<systemPath>libs/emailservice-0.0.1.jar</systemPath>
 			</dependency>
 			<dependency>
 				<groupId>managemodel</groupId>
 				<artifactId>managemodel</artifactId>
 				<version>0.0.1</version>
 				<scope>system</scope>
-				<systemPath>/home/ec2-user/Manage-employee/libs/managemodel-0.0.1.jar</systemPath>
+				<systemPath>libs/managemodel-0.0.1.jar</systemPath>
 			</dependency>
 			<dependency>
 				<groupId>authToken</groupId>
 				<artifactId>authToken</artifactId>
 				<version>0.0.2</version>
 				<scope>system</scope>
-				<systemPath>/home/ec2-user/Manage-employee/libs/authToken-2.0.0.jar</systemPath>
+				<systemPath>libs/authToken-2.0.0.jar</systemPath>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
