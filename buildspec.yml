@@ -21,7 +21,7 @@ phases:
       - mvn install:install-file -Dfile=libs/managemodel-0.0.1.jar -DgroupId=managemodel -DartifactId=managemodel -Dversion=0.0.1 -Dpackaging=jar
       - mvn install:install-file -Dfile=libs/authToken-2.0.0.jar -DgroupId=authToken -DartifactId=authToken -Dversion=0.0.2 -Dpackaging=jar
       - ls -la libs/
-      - mvn clean install
+      - mvn clean package spring-boot:repackage
   post_build:
     commands:
       - echo "Build complete!"
