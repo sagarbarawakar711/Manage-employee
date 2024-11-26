@@ -8,8 +8,6 @@ phases:
     commands:
       - echo "Downloading emailservice-0.0.1.jar from S3..."
       # Download the JAR file from S3 to the current directory
-      - mkdir -p Manage-employee/libs 
-      - cd Manage-employee
       - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar .
   build:
     command: 
