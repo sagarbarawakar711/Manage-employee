@@ -13,7 +13,7 @@ phases:
       - aws s3 cp s3://sagar-artifact/Manage-Model/target/managemodel-0.0.1.jar libs/
       - aws s3 cp s3://sagar-artifact/Auth/target/authToken-2.0.0.jar libs/
       - ls -la
-      - ls -la libs/
+      - ls -la ${CODEBUILD_SRC_DIR}/libs/
       - pwd
   build:
     commands: 
