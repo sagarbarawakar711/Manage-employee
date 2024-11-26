@@ -20,7 +20,7 @@ phases:
       - mvn install:install-file -Dfile=libs/emailservice-0.0.1.jar -DgroupId=com.sam -DartifactId=emailservice -Dversion=0.0.1 -Dpackaging=jar
       - mvn install:install-file -Dfile=libs/managemodel-0.0.1.jar -DgroupId=managemodel -DartifactId=managemodel -Dversion=0.0.1 -Dpackaging=jar
       - mvn install:install-file -Dfile=libs/authToken-2.0.0.jar -DgroupId=authToken -DartifactId=authToken -Dversion=0.0.2 -Dpackaging=jar
-      - ls -la /codebuild/output/src3998014475/src/github.com/sagarbarawakar711/Manage-employee/libs/
+      - ls -la libs/
       - mvn clean install
   post_build:
     commands:
