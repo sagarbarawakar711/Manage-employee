@@ -8,7 +8,7 @@ files:
     destination: /opt/tomcat/webapps/
 permissions:
   - object: /opt/tomcat/webapps/setup.sh  # Apply permissions to the setup.sh script
-    mode: 755  # Make it executable
+    mode: 777  # Make it executable
     owner: root
     type:
       - file
