@@ -3,6 +3,8 @@ os: linux
 
 files:
   # Copy the JAR file from the source artifact (e.g., target/*.jar) to the destination
+  - source: setup.sh
+    destination: /opt/tomcat/webapps/
   - source: target/manageemployee-0.0.1.jar
     destination: /opt/tomcat/webapps/
 hooks:
