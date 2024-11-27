@@ -153,7 +153,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<!--
 			<dependency>
 				<groupId>com.sam</groupId>
 				<artifactId>emailservice</artifactId>
@@ -182,7 +181,6 @@
 				<scope>system</scope>
 				<systemPath>${CODEBUILD_SRC_DIR}/libs/emailservice-0.0.1.jar</systemPath>
 			</dependency>
-			-->
 		</dependencies>
 	</dependencyManagement>
 	<build>
