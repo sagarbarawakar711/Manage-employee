@@ -5,11 +5,9 @@ files:
   # Copy the JAR file from the source artifact (e.g., target/*.jar) to the destination
   - source: target/manageemployee-0.0.1.jar
     destination: /opt/tomcat/webapps/
-  - source: setup.sh
-    destination: /opt/tomcat/webapps/
 hooks:
   # Define lifecycle event hooks
   AfterInstall:
-    - location: /opt/tomcat/webapps/setup.sh
+    - location: setup.sh
       timeout: 300
       runas: root
