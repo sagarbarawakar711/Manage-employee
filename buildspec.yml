@@ -19,7 +19,7 @@ phases:
     commands:
       - echo "Build complete!"
       - cd target
-      - ls -la
+      - ls -hla
 
 artifacts:
   files:
