@@ -25,3 +25,4 @@ artifacts:
   files:
     - target/*.jar # Adjust this according to the location of your generated artifacts
     - setup.sh
+    - appspec.yml
