@@ -12,15 +12,8 @@ phases:
       - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar libs/
       - aws s3 cp s3://sagar-artifact/Manage-Model/target/managemodel-0.0.1.jar libs/
       - aws s3 cp s3://sagar-artifact/Auth/target/authToken-2.0.0.jar libs/
-      - ls -la
-      - ls -la ${CODEBUILD_SRC_DIR}/libs/
-      - pwd
   build:
     commands: 
-      - mvn install:install-file -Dfile=libs/emailservice-0.0.1.jar -DgroupId=com.sam -DartifactId=emailservice -Dversion=0.0.1 -Dpackaging=jar
-      - mvn install:install-file -Dfile=libs/managemodel-0.0.1.jar -DgroupId=managemodel -DartifactId=managemodel -Dversion=0.0.1 -Dpackaging=jar
-      - mvn install:install-file -Dfile=libs/authToken-2.0.0.jar -DgroupId=authToken -DartifactId=authToken -Dversion=0.0.2 -Dpackaging=jar
-      - ls -la libs/
       - mvn clean package spring-boot:repackage
   post_build:
     commands:
