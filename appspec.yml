@@ -1,9 +1,13 @@
 version: 0.0
 os: linux
+
 files:
-  - source: manageemployee-0.0.1.jar
-    destination: /opt/tomcat/webapps
+  # Copy the JAR file from the source artifact (e.g., target/*.jar) to the destination
+  - source: target/manageemployee-0.0.1.jar
+    destination: /opt/tomcat/webapps/
+
 hooks:
+  # Define lifecycle event hooks
   AfterInstall:
     - location: setup.sh
       timeout: 300
