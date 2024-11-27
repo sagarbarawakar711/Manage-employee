@@ -24,4 +24,4 @@ phases:
 artifacts:
   files:
     - target/*.jar # Adjust this according to the location of your generated artifacts
-    - etup.sh
+    - setup.sh
