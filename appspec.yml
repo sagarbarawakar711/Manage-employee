@@ -8,11 +8,10 @@ files:
     destination: /opt/tomcat/webapps/
 
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: chmod +x /opt/tomcat/webapps/setup.sh
       timeout: 60
       runas: root
-  AfterInstall:
     - location: /opt/tomcat/webapps/setup.sh  # Use full path to setup.sh
       timeout: 300
       runas: root
