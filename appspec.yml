@@ -14,7 +14,7 @@ permissions:
       - file
 hooks:
   AfterInstall:
-    - location: bash /opt/tomcat/webapps/setup.sh  # Use full path to setup.sh
+    - location: /opt/tomcat/webapps/setup.sh  # Use full path to setup.sh
       timeout: 300
       runas: root
       
