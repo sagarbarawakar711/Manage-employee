@@ -10,9 +10,10 @@ files:
 hooks:
   # Define lifecycle event hooks
   AfterInstall:
-    - location: setup.sh
-      timeout: 300
-      runas: root
     - location: chmod +x /opt/tomcat/webapps/setup.sh
       timeout: 60
       runas: root
+    - location: setup.sh
+      timeout: 300
+      runas: root
+    
