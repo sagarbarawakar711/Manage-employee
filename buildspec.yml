@@ -1,5 +1,5 @@
 version: 0.2
- 
+
 phases:
 
   install:
@@ -51,18 +51,6 @@ phases:
       - jar -cvf ../target/manageemployee-0.0.1-final.jar *
 
       - cd ..
- 
-      - echo "Extracting the newly created JAR file to verify dependencies..."
-
-      - mkdir final-unpacked-jar
-
-      - cd final-unpacked-jar
-
-      - jar -xvf ../target/manageemployee-0.0.1-final.jar
- 
-      - echo "Listing all JAR files in the 'libs' folder of the newly created JAR..."
-
-      - ls -lha BOOT-INF/lib
 
   post_build:
 
@@ -73,7 +61,7 @@ phases:
       - echo "Final artifacts in the target folder:"
 
       - ls -hla target/
- 
+
 artifacts:
 
   files:
@@ -83,5 +71,4 @@ artifacts:
     - setup.sh
 
     - appspec.yml
-
  
