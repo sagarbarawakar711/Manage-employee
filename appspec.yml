@@ -2,19 +2,17 @@ version: 0.0
 os: linux
 
 files:
-  - source: setup.sh
-    destination: /opt/tomcat/webapps/
   - source: target/manageemployee-0.0.1.jar
     destination: /opt/tomcat/webapps/
 permissions:
-  - object: /opt/tomcat/webapps/setup.sh  # Apply permissions to the setup.sh script
+  - object: setup.sh  # Apply permissions to the setup.sh script
     mode: 777  # Make it executable
     owner: root
     type:
       - file
 hooks:
   ApplicationStart:
-    - location: /bin/bash -c 'ls -l /opt/tomcat/webapps/ && /opt/tomcat/webapps/setup.sh'
+    - location: setup.sh
       timeout: 300
       runas: root
       
