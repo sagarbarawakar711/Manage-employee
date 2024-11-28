@@ -155,6 +155,7 @@
 				<scope>system</scope>
 				<systemPath>${CODEBUILD_SRC_DIR}/libs/emailservice-0.0.1.jar</systemPath>
 			</dependency>
+			<!--
 			<dependency>
 				<groupId>managemodel</groupId>
 				<artifactId>managemodel</artifactId>
@@ -176,6 +177,7 @@
 				<scope>system</scope>
 				<systemPath>${CODEBUILD_SRC_DIR}/libs/emailservice-0.0.1.jar</systemPath>
 			</dependency>
+			-->
 		</dependencies>
 	</dependencyManagement>
 	<build>
