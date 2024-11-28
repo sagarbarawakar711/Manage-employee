@@ -1,3 +1,4 @@
 #!/bin/bash
 
-java -jar /opt/tomcat/webapps/manageemployee-0.0.1.jar
+# Print a message indicating that the script is starting
+echo "Starting the Java application..."
