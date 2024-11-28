@@ -1,28 +1,73 @@
 version: 0.2
-
+ 
 phases:
-  install:
-    runtime-versions:
-      java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
-  pre_build:
-    commands:
-      - echo "Downloading emailservice-0.0.1.jar from S3..."
-      # Download the JAR file from S3 to the current directory
-      - mkdir libs
-      - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar libs/
-      - aws s3 cp s3://sagar-artifact/Manage-Model/target/managemodel-0.0.1.jar libs/
-      - aws s3 cp s3://sagar-artifact/Auth/target/authToken-2.0.0.jar libs/
-  build:
-    commands: 
-      - mvn clean package spring-boot:repackage
-  post_build:
-    commands:
-      - echo "Build complete!"
-      - cd target
-      - ls -hla
 
+  install:
+
+    runtime-versions:
+
+      java: corretto11  # Specify the Java version (e.g., Corretto 11 or OpenJDK 11)
+
+  pre_build:
+
+    commands:
+
+      - echo "Setting up environment..."
+
+      - mkdir libs
+
+      - echo "Downloading dependencies from S3..."
+
+      - aws s3 cp s3://sagar-artifact/Email-service/target/emailservice-0.0.1.jar libs/
+
+      - aws s3 cp s3://sagar-artifact/Manage-Model/target/managemodel-0.0.1.jar libs/
+
+      - aws s3 cp s3://sagar-artifact/Auth/target/authToken-2.0.0.jar libs/
+
+  build:
+
+    commands:
+
+      - echo "Building the project..."
+
+      - mvn clean package spring-boot:repackage
+
+      - echo "Extracting the generated JAR..."
+
+      - mkdir unpacked-jar
+
+      - cd unpacked-jar
+
+      - jar -xvf ../target/manageemployee-0.0.1.jar
+
+      - echo "Adding dependencies to the JAR..."
+
+      - mkdir -p BOOT-INF/lib
+
+      - cp ../libs/*.jar BOOT-INF/lib/
+
+      - echo "Repackaging the JAR..."
+
+      - jar -cvf ../target/manageemployee-0.0.1-final.jar *
+
+      - cd ..
+
+  post_build:
+
+    commands:
+
+      - echo "Build and repackaging complete!"
+
+      - ls -hla target/
+ 
 artifacts:
+
   files:
-    - target/*.jar # Adjust this according to the location of your generated artifacts
+
+    - target/*.jar  # Include the final repackaged JAR
+
     - setup.sh
+
     - appspec.yml
+
+ 
