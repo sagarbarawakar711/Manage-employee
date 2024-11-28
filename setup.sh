@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -jar manageemployee-0.0.1.jar
+java -jar /opt/tomcat/webapps/manageemployee-0.0.1.jar
