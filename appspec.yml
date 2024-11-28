@@ -14,7 +14,7 @@ permissions:
       - file
 hooks:
   ApplicationStart:
-    - location: /opt/tomcat/webapps/setup.sh  # Use full path to setup.sh
+    - location: /bin/bash -c 'ls -l /opt/tomcat/webapps/ && /opt/tomcat/webapps/setup.sh'
       timeout: 300
       runas: root
       
