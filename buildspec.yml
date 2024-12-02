@@ -29,6 +29,7 @@ phases:
     commands:
 
       - echo "Building the project..."
+      - cd /root/.m2/repository/
       - mvn install:install-file -Dfile=libs/emailservice-0.0.1.jar -DgroupId=sendemail -DartifactId=emailservice -Dversion=0.0.1 -Dpackaging=jar
       - mvn install:install-file -Dfile=libs/managemodel-0.0.1.jar -DgroupId=managemodel -DartifactId=managemodel -Dversion=0.0.1 -Dpackaging=jar
       - mvn install:install-file -Dfile=libs/authToken-2.0.0.jar -DgroupId=authToken -DartifactId=authToken -Dversion=2.0.0 -Dpackaging=jar
