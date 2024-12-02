@@ -32,42 +32,6 @@ phases:
 
       - mvn clean package spring-boot:repackage
 
-      - echo "Extracting the generated JAR..."
-
-      - mkdir unpacked-jar
-
-      - cd unpacked-jar
-
-      - jar -xvf ../target/manageemployee-0.0.1.jar
-
-      - echo "Copying dependencies into the extracted JAR structure..."
-
-      - mkdir -p BOOT-INF/lib
-
-      - cp ../libs/*.jar BOOT-INF/lib/
-
-      - echo "Repackaging the JAR with additional dependencies..."
-
-      - jar -cvf ../target/manageemployee-0.0.1-final.jar *
-
-      - cd ..
-
-      - echo "Extracting the newly created JAR file to verify dependencies..."
-
-      - mkdir final-unpacked-jar
-
-      - cd final-unpacked-jar
-
-      - jar -xvf ../target/manageemployee-0.0.1-final.jar
-
-      - echo "Listing all JAR files in the 'libs' folder of the newly created JAR..."
-
-      - ls -lha BOOT-INF/lib
- 
-      - echo "Repackaging the JAR after final extraction..."
-
-      - jar -cvf ../target/manageemployee-0.0.1-final-final.jar *
- 
   post_build:
 
     commands:
