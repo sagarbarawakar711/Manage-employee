@@ -148,6 +148,27 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>managemodel</groupId>
+				<artifactId>managemodel</artifactId>
+				<version>0.0.1</version>
+				<scope>system</scope>
+				<systemPath>${CODEBUILD_SRC_DIR}/libs/managemodel-0.0.1.jar</systemPath>
+			</dependency>
+			<dependency>
+				<groupId>authToken</groupId>
+				<artifactId>authToken</artifactId>
+				<version>2.0.0</version>
+				<scope>system</scope>
+				<systemPath>${CODEBUILD_SRC_DIR}/libs/authToken-2.0.0.jar</systemPath>
+			</dependency>
+			<dependency>
+				<groupId>sendemail</groupId>
+				<artifactId>emailservice</artifactId>
+				<version>0.0.1</version>
+				<scope>system</scope>
+				<systemPath>${CODEBUILD_SRC_DIR}/libs/emailservice-0.0.1.jar</systemPath>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
